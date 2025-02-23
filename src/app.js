@@ -1,6 +1,43 @@
 const express = require("express");
-
+const { adminAuth, userAuth } = require("./middlewares/auth");
 const app = express();
+
+app.use("/admin", adminAuth);
+
+app.get("/user/login", userAuth, (req, res) => {
+  res.send("User login successful");
+});
+
+app.get("/admin/allData", (req, res) => {
+  res.send("Send all data");
+});
+
+app.delete("/admin/deleteData", (req, res) => {
+  res.send("Delete all data from database");
+});
+
+//-----multiple route handing----------
+// app.use(
+//   "/user",
+//   [
+// --------below this is example of middleware--------
+//     (req, res, next) => {
+//       console.log("User middleware");
+//       next();
+//     },
+// ----below this is example of route handling---- which is used to send response to the client
+//     (req, res, next) => {
+//       console.log("User middleware 1");
+//       res.send("User route");
+//       next();
+//     },
+//   ],
+//   (req, res, next) => {
+//     // res.send("User route 2");
+//     console.log("User middleware 2");
+//     next();
+//   }
+// );
 
 // ? is used for optional and terget the string which is present before the ? symbol
 // app.get("/ab?c", (req, res) => {
@@ -26,7 +63,7 @@ const app = express();
 //   res.send({ name: "Avrodip", age: 30 });
 // });
 
-// Dynamic routing
+// -----Dynamic routing----
 // app.get("/user/:id/:name", (req, res) => {
 //   console.log(req.params);
 //   res.send({ name: "Avrodip", age: 30 });
