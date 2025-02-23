@@ -2,19 +2,26 @@ const express = require("express");
 const { adminAuth, userAuth } = require("./middlewares/auth");
 const app = express();
 
-app.use("/admin", adminAuth);
+// --- Error handling middleware (use this end of the code) ---
+// app.use("/", (error, req, res, next) => {
+//   if (error) {
+//     res.status(500).send("There was a server side error!");
+//   }
+// });
+//--- implement the adminAuth & userAuth middleware for the admin route-------
+// app.use("/admin", adminAuth);
 
-app.get("/user/login", userAuth, (req, res) => {
-  res.send("User login successful");
-});
+// app.get("/user/login", userAuth, (req, res) => {
+//   res.send("User login successful");
+// });
 
-app.get("/admin/allData", (req, res) => {
-  res.send("Send all data");
-});
+// app.get("/admin/allData", (req, res) => {
+//   res.send("Send all data");
+// });
 
-app.delete("/admin/deleteData", (req, res) => {
-  res.send("Delete all data from database");
-});
+// app.delete("/admin/deleteData", (req, res) => {
+//   res.send("Delete all data from database");
+// });
 
 //-----multiple route handing----------
 // app.use(
