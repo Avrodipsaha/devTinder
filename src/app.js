@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const connecteDb = require("./config/database");
 const User = require("./models/user");
+const user = require("./models/user");
 
 app.use(express.json()); //middleware to parse the incoming request with JSON payload
 app.post("/signup", async (req, res) => {
@@ -37,6 +38,19 @@ app.get("/feed", async (req, res) => {
   }
 });
 
+// delete user by id
+app.delete("/user", async (req, res) => {
+  try {
+    const id = req.body.id;
+    await User.findByIdAndDelete(id);
+    // await User.findByIdAndDelete({_id: id});
+    res.send("User deleted successfully");
+  } catch (err) {
+    res.status(400).send("Someting went wrong: " + err);
+  }
+});
+
+// connecting database first and starting server
 connecteDb()
   .then(() => {
     console.log("Database connected successfully");
