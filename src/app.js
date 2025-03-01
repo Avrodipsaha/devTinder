@@ -12,7 +12,28 @@ app.post("/signup", async (req, res) => {
     res.send("Signup successful");
   } catch (err) {
     res.status(400).send("Unable to signup: " + err);
-    console.log();
+  }
+});
+
+// find user by email
+app.get("/user", async (req, res) => {
+  try {
+    const user = await User.findOne({
+      email: req.body.email,
+    });
+    res.send(user);
+  } catch (err) {
+    res.status(400).send("Something went wrong: " + err);
+  }
+});
+
+// get all users for feed
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.send(users);
+  } catch (err) {
+    res.status(400).send("Someting went wrong: " + err);
   }
 });
 
