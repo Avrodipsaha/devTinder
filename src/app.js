@@ -1,6 +1,21 @@
 const express = require("express");
-const { adminAuth, userAuth } = require("./middlewares/auth");
 const app = express();
+const connecteDb = require("./config/database");
+
+connecteDb()
+  .then(() => {
+    console.log("Database connected successfully");
+    app.listen(4444, () => {
+      console.log("listening on port 4444...");
+    });
+  })
+  .catch((err) => {
+    console.log("we not able to connect with database");
+    console.log(err);
+  });
+
+// -----------------------------Note sections-----------------------------
+// const { adminAuth, userAuth } = require("./middlewares/auth");
 
 // --- Error handling middleware (use this end of the code) ---
 // app.use("/", (error, req, res, next) => {
@@ -107,7 +122,3 @@ const app = express();
 // app.use("/", (req, res) => {
 //   res.send("hello from Home server");
 // });
-
-app.listen(4444, () => {
-  console.log("listening on port 4444...");
-});
