@@ -1,6 +1,20 @@
 const express = require("express");
 const app = express();
 const connecteDb = require("./config/database");
+const User = require("./models/user");
+
+app.use(express.json()); //middleware to parse the incoming request with JSON payload
+app.post("/signup", async (req, res) => {
+  //create new user instance using req.body
+  const user = new User(req.body);
+  try {
+    await user.save();
+    res.send("Signup successful");
+  } catch (err) {
+    res.status(400).send("Unable to signup: " + err);
+    console.log();
+  }
+});
 
 connecteDb()
   .then(() => {
@@ -121,4 +135,13 @@ connecteDb()
 
 // app.use("/", (req, res) => {
 //   res.send("hello from Home server");
+// });
+
+// -----------------database connection-------------------
+// //create new user instance manually
+// const user = new User({
+//   firstName: "Avrodip",
+//   lastName: "Saha",
+//   email: "avrodip@saha.com",
+//   password: 1234567890,
 // });
