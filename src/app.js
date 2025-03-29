@@ -9,6 +9,7 @@ app.post("/signup", async (req, res) => {
   //create new user instance using req.body
   const user = new User(req.body);
   try {
+    //Todo: Api validation/sanitization
     await user.save();
     res.send("Signup successful");
   } catch (err) {
