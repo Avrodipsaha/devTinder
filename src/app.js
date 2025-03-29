@@ -50,6 +50,20 @@ app.delete("/user", async (req, res) => {
   }
 });
 
+// update user data to database by id
+app.patch("/user", async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const data = req.body;
+    await User.findByIdAndUpdate({ _id: userId }, data, {
+      runValidators: true,
+    });
+    res.send("User data updated successfully");
+  } catch (err) {
+    res.status(400).send("Someting went wrong: " + err);
+  }
+});
+
 // connecting database first and starting server
 connecteDb()
   .then(() => {
