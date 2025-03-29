@@ -51,10 +51,17 @@ app.delete("/user", async (req, res) => {
 });
 
 // update user data to database by id
-app.patch("/user", async (req, res) => {
+app.patch("/user/:userId", async (req, res) => {
   try {
-    const userId = req.body.userId;
+    const userId = req.params?.userId;
+    const updateData = ["age", "skills", "gender"];
     const data = req.body;
+    const isValidData = Object.keys(data).every((key) =>
+      updateData.includes(key)
+    );
+    if (!isValidData) {
+      return res.status(400).send("Invalid data to update");
+    }
     await User.findByIdAndUpdate({ _id: userId }, data, {
       runValidators: true,
     });
